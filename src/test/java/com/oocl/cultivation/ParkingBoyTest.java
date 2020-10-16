@@ -28,4 +28,20 @@ class ParkingBoyTest {
         //then
         assertSame(car, returnCar);
     }
+
+    @Test
+    void should_return_two_car_when_fetched_given_two_valid_ticket_to_boy() {
+        //given
+        Car car1 = new Car();
+        Car car2 = new Car();
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        ParkingTicket parkingTicket1 = parkingBoy.park(car1);
+        ParkingTicket parkingTicket2 = parkingBoy.park(car2);
+        // when
+        Car returnCar1 = parkingBoy.fetch(parkingTicket1);
+        Car returnCar2 = parkingBoy.fetch(parkingTicket2);
+        //then
+        assertSame(car1,returnCar1);
+        assertSame(car2,returnCar2);
+    }
 }
