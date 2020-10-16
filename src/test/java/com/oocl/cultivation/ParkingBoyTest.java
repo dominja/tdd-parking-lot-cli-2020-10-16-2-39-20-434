@@ -59,4 +59,18 @@ class ParkingBoyTest {
         });
         assertSame(car,returnCar);
     }
+    @Test
+    void should_return_NoTicketException_error_message_when_fetched_given_no_ticket_to_boy() {
+        //given
+        Car car = new Car();
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        ParkingTicket validTicket = parkingBoy.park(car);
+        // when
+        Car returnCar = parkingBoy.fetch(validTicket);
+        //then
+        assertThrows(NoTicketException.class,()-> {
+            parkingBoy.fetch(null);
+        });
+        assertSame(car,returnCar);
+    }
 }
