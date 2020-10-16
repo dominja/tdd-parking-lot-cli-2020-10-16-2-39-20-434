@@ -2,8 +2,7 @@ package com.oocl.cultivation;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingBoyTest {
     @Test
@@ -43,5 +42,17 @@ class ParkingBoyTest {
         //then
         assertSame(car1,returnCar1);
         assertSame(car2,returnCar2);
+
+    }
+    @Test
+    void should_return_no_car_when_fetched_given_invalid_ticket_to_boy() {
+        //given
+        Car car = new Car();
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        ParkingTicket ticket = parkingBoy.park(car);
+        // when
+        Car returnCar = parkingBoy.fetch(ticket);
+        //then
+        assertNull(returnCar);
     }
 }
