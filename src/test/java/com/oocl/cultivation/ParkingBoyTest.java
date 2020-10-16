@@ -45,17 +45,18 @@ class ParkingBoyTest {
 
     }
     @Test
-    void should_return_no_car_when_fetched_given_invalid_ticket_to_boy() {
+    void should_return_UnrecognizedParkingTicket_error_message_when_fetched_given_invalid_ticket_to_boy() {
         //given
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         ParkingTicket validTicket = parkingBoy.park(car);
         ParkingTicket invalidTicket = new ParkingTicket();
         // when
-        Car returnNoCar = parkingBoy.fetch(invalidTicket);
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
-        assertNull(returnNoCar);
+        assertThrows(UnrecognizedParkingTicket.class,()-> {
+            parkingBoy.fetch(invalidTicket);
+        });
         assertSame(car,returnCar);
     }
 }
