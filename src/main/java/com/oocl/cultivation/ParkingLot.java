@@ -11,7 +11,12 @@ public class ParkingLot {
         return parkingTicket;
     }
 
-    Car fetch(ParkingTicket parkingTicket) {
-        return parkingLotSpace.get(parkingTicket);
+    Car fetch(ParkingTicket parkingTicket) throws UnrecognizedParkingTicket {
+        Car ticket = parkingLotSpace.get(parkingTicket);
+        if(ticket!=null) {
+            return ticket;
+        }else{
+            throw new UnrecognizedParkingTicket("Unrecognized Parking Ticket");
+        }
     }
 }
