@@ -1,10 +1,14 @@
 package com.oocl.cultivation;
 
-public class ParkingBoy {
+public class ParkingBoy extends ParkingTicket {
+    private ParkingLot parkingLot;
+
     public ParkingBoy(ParkingLot parkingLot) {
+        super();
+        this.parkingLot = parkingLot;
     }
 
     public ParkingTicket park(Car car) {
-        return null;
+        return new ParkingTicket(car);
     }
 }
