@@ -2,6 +2,8 @@ package com.oocl.cultivation;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingBoyTest {
@@ -40,10 +42,11 @@ class ParkingBoyTest {
         Car returnCar1 = parkingBoy.fetch(parkingTicket1);
         Car returnCar2 = parkingBoy.fetch(parkingTicket2);
         //then
-        assertSame(car1,returnCar1);
-        assertSame(car2,returnCar2);
+        assertSame(car1, returnCar1);
+        assertSame(car2, returnCar2);
 
     }
+
     @Test
     void should_return_UnrecognizedParkingTicket_error_message_when_fetched_given_invalid_ticket_to_boy() {
         //given
@@ -54,11 +57,12 @@ class ParkingBoyTest {
         // when
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
-        assertThrows(UnrecognizedParkingTicket.class,()-> {
+        assertThrows(UnrecognizedParkingTicket.class, () -> {
             parkingBoy.fetch(invalidTicket);
         });
-        assertSame(car,returnCar);
+        assertSame(car, returnCar);
     }
+
     @Test
     void should_return_NoTicketException_error_message_when_fetched_given_no_ticket_to_boy() {
         //given
@@ -68,9 +72,26 @@ class ParkingBoyTest {
         // when
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
-        assertThrows(NoTicketException.class,()-> {
+        assertThrows(NoTicketException.class, () -> {
             parkingBoy.fetch(null);
         });
-        assertSame(car,returnCar);
+        assertSame(car, returnCar);
+    }
+
+    @Test
+    void should_return_NoAvailableSpacesException_error_message_when_fetched_given_car_to_boy_and_full() {
+        //given
+        Car car = new Car();
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        IntStream.range(0, 9).forEach(cars -> {
+            Car carsNew = new Car();
+            parkingBoy.park(carsNew);
+        });
+        // when
+        parkingBoy.park(car);
+        //then
+        assertThrows(NoAvailableSpacesException.class, () -> {
+            parkingBoy.park(car);
+        });
     }
 }
