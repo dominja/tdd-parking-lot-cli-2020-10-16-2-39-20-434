@@ -11,10 +11,12 @@ public class ParkingLot {
         return parkingTicket;
     }
 
-    Car fetch(ParkingTicket parkingTicket) throws UnrecognizedParkingTicket {
+    Car fetch(ParkingTicket parkingTicket){
         Car ticket = parkingLotSpace.get(parkingTicket);
         if(ticket!=null) {
             return ticket;
+        }else if(parkingTicket==null){
+            throw new NoTicketException("Please Provide Your Parking Ticket");
         }else{
             throw new UnrecognizedParkingTicket("Unrecognized Parking Ticket");
         }
