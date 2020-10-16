@@ -7,7 +7,11 @@ public class ParkingLot {
 
     ParkingTicket park(Car car) {
         ParkingTicket parkingTicket = new ParkingTicket();
-        parkingLotSpace.put(parkingTicket, car);
+        if(parkingLotSpace.size()!=10) {
+            parkingLotSpace.put(parkingTicket, car);
+        }else {
+            throw new NoAvailableSpacesException("Not Enough Position");
+        }
         return parkingTicket;
     }
 
