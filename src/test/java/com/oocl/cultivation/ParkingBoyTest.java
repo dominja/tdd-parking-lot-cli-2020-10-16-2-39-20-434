@@ -2,6 +2,8 @@ package com.oocl.cultivation;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,7 +60,21 @@ class ParkingBoyTest {
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
         assertThrows(UnrecognizedParkingTicket.class, () -> {
-            parkingBoy.fetch(invalidTicket);
+            parkingBoy.fetch(validTicket);
+        });
+        assertSame(car, returnCar);
+    }
+    @Test
+    void should_return_UnrecognizedParkingTicket_error_message_when_fetched_given_reused_ticket_to_boy() {
+        //given
+        Car car = new Car();
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        ParkingTicket validTicket = parkingBoy.park(car);
+        // when
+        Car returnCar = parkingBoy.fetch(validTicket);
+        //then
+        assertThrows(UnrecognizedParkingTicket.class, () -> {
+            parkingBoy.fetch(validTicket);
         });
         assertSame(car, returnCar);
     }
@@ -93,5 +109,25 @@ class ParkingBoyTest {
         assertThrows(NoAvailableSpacesException.class, () -> {
             parkingBoy.park(car);
         });
+    }
+
+    @Test
+    void should_return_number_of_parked_cars_when_park_given_two_parking_lot_with_not_clever_boy() {
+        //given
+        Car car = new Car();
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+
+        ParkingLot parkingLot1 = new ParkingLot(1, 0);
+        ParkingLot parkingLot2 = new ParkingLot(5, 0);
+        List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
+        parkingBoy.setListParkingLots(parkingLots);
+        // when
+        parkingBoy.park(car);
+        parkingBoy.park(car);
+        int actual1 = parkingLot1.getParkedCars().size();
+        int actual2 = parkingLot2.getParkedCars().size();
+        //then
+        assertEquals(1, actual1);
+        assertEquals(1, actual2);
     }
 }
