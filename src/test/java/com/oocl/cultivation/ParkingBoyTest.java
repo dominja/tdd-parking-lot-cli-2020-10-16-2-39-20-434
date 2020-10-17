@@ -122,12 +122,14 @@ class ParkingBoyTest {
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
         parkingBoy.setListParkingLots(parkingLots);
         // when
-        parkingBoy.park(car);
-        parkingBoy.park(car);
+        IntStream.range(0, 3).forEach(cars -> {
+            Car carsNew = new Car();
+            parkingBoy.park(carsNew);
+        });
         int actual1 = parkingLot1.getParkedCars().size();
         int actual2 = parkingLot2.getParkedCars().size();
         //then
         assertEquals(1, actual1);
-        assertEquals(1, actual2);
+        assertEquals(2, actual2);
     }
 }
