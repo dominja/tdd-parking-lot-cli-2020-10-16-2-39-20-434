@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ServiceManagerTest {
     @Test
@@ -68,7 +69,7 @@ class ServiceManagerTest {
     }
 
     @Test
-    void should_return_right_count_of_parking_lot_slot_when_park_given_to_boy_and_can_only_access_his_own_parkinglot() {
+    void should_return_null_when_park_given_to_boy_and_can_only_access_his_own_parkinglot() {
         //Given
         Car car = new Car();
         ServiceManager serviceManager = new ServiceManager(new ParkingLot());
@@ -92,12 +93,10 @@ class ServiceManagerTest {
         serviceManager.getParkingBoyList(listParkingBoy);
 
         //When
-        serviceManager.orderParkingBoyToPark(car, normalParkingBoy1);
-        int countParkedCarsNormalBoy1 = parkingLot1.getParkedCars().size();
-        int countParkedCarsNormalBoy2 = parkingLot2.getParkedCars().size();
+        ParkingTicket ticket = serviceManager.orderParkingBoyToPark(car, normalParkingBoy1);
         // Then
-        assertEquals(1, countParkedCarsNormalBoy1);
-        assertEquals(0, countParkedCarsNormalBoy2);
+        assertNull(parkingLot3.fetch(ticket));
+        assertNull(parkingLot4.fetch(ticket));
     }
 
     @Test
@@ -109,5 +108,21 @@ class ServiceManagerTest {
         ParkingTicket ticket = serviceManager.park(car);
         //then
         assertNotNull(ticket);
+    }
+
+    @Test
+    void should_return_null_when_parked_to_wrong_parking_lot_given_car_to_service_manager_() {
+        //given
+        Car car = new Car();
+        ServiceManager serviceManager = new ServiceManager(new ParkingLot());
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(3);
+        ParkingLot parkingLot3 = new ParkingLot(3);
+        List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
+        serviceManager.setListParkingLots(parkingLots);
+        // when
+        ParkingTicket ticket = serviceManager.park(car);
+        //then
+        assertNull(parkingLot3.fetch(ticket));
     }
 }
