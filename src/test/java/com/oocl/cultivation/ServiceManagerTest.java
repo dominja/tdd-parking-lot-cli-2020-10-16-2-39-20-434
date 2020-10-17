@@ -125,6 +125,7 @@ class ServiceManagerTest {
         //then
         assertNull(parkingLot3.fetch(ticket));
     }
+
     @Test
     void should_return_car_when_fetch_given_ticket_to_service_manager() {
         //given
@@ -134,12 +135,12 @@ class ServiceManagerTest {
         // when
         Car returnedCar = serviceManager.fetch(ticket);
         //then
-        assertSame(car,returnedCar);
+        assertSame(car, returnedCar);
     }
+
     @Test
     void should_return_UnrecognizedParkingTicket_message_when_manager_asked_to_fetch_given_invalid_ticket_to_boy() {
         //Given
-        Car car = new Car();
         ServiceManager serviceManager = new ServiceManager(new ParkingLot());
         ParkingBoy normalParkingBoy = new ParkingBoy(new ParkingLot());
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
@@ -157,6 +158,27 @@ class ServiceManagerTest {
         //then
         assertThrows(UnrecognizedParkingTicket.class, () -> {
             serviceManager.orderParkingBoyToFetch(invalidTicket, normalParkingBoy);
+        });
+    }
+    @Test
+    void should_return_NoTicketException_message_when_manager_asked_to_fetch_given_no_ticket_to_boy() {
+        //Given
+        ServiceManager serviceManager = new ServiceManager(new ParkingLot());
+        ParkingBoy normalParkingBoy = new ParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(3);
+
+        List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
+        normalParkingBoy.setListParkingLots(parkingLots);
+
+        List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy, smartParkingBoy);
+        serviceManager.setParkingBoyList(listParkingBoy);
+        //When
+        // when
+        //then
+        assertThrows(NoTicketException.class, () -> {
+            serviceManager.orderParkingBoyToFetch(null, normalParkingBoy);
         });
     }
 }
