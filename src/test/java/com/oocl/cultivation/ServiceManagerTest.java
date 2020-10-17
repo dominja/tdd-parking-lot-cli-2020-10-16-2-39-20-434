@@ -66,6 +66,7 @@ class ServiceManagerTest {
         // Then
         assertNull(ticket);
     }
+
     @Test
     void should_return_right_count_of_parking_lot_slot_when_park_given_to_boy_and_can_only_access_his_own_parkinglot() {
         //Given
@@ -82,7 +83,7 @@ class ServiceManagerTest {
         ParkingLot parkingLot4 = new ParkingLot(4);
 
         List<ParkingLot> parkingLotsForNormalBoy1 = Arrays.asList(parkingLot1, parkingLot2);
-        List<ParkingLot> parkingLotsForNormalBoy2 = Arrays.asList(parkingLot3,parkingLot4);
+        List<ParkingLot> parkingLotsForNormalBoy2 = Arrays.asList(parkingLot3, parkingLot4);
 
         normalParkingBoy1.setListParkingLots(parkingLotsForNormalBoy1);
         normalParkingBoy2.setListParkingLots(parkingLotsForNormalBoy2);
@@ -90,13 +91,23 @@ class ServiceManagerTest {
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy1, normalParkingBoy2);
         serviceManager.getParkingBoyList(listParkingBoy);
 
-
         //When
         serviceManager.orderParkingBoyToPark(car, normalParkingBoy1);
-        int countParkedCarsNormalBoy1=parkingLot1.getParkedCars().size();
-        int countParkedCarsNormalBoy2=parkingLot2.getParkedCars().size();
+        int countParkedCarsNormalBoy1 = parkingLot1.getParkedCars().size();
+        int countParkedCarsNormalBoy2 = parkingLot2.getParkedCars().size();
         // Then
-        assertEquals(1,countParkedCarsNormalBoy1);
-        assertEquals(0,countParkedCarsNormalBoy2);
+        assertEquals(1, countParkedCarsNormalBoy1);
+        assertEquals(0, countParkedCarsNormalBoy2);
+    }
+
+    @Test
+    void should_return_parking_ticket_when_park_given_car_to_service_manager() {
+        //given
+        Car car = new Car();
+        ServiceManager serviceManager = new ServiceManager(new ParkingLot());
+        // when
+        ParkingTicket ticket = serviceManager.park(car);
+        //then
+        assertNotNull(ticket);
     }
 }
