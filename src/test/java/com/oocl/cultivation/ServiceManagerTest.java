@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class ServiceManagerTest {
+class ServiceManagerTest {
     @Test
     void should_return_list_of_parking_boys_to_management_list_manage_parking_boys() {
         //Given
@@ -16,7 +16,7 @@ public class ServiceManagerTest {
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
         List<ParkingBoy> listParkingBoy = Arrays.asList(parkingBoy, smartParkingBoy);
         //When
-        parkingBoys=serviceManager.addParkingBoy(listParkingBoy);
+        parkingBoys=serviceManager.getParkingBoyList(listParkingBoy);
         // Then
         Assertions.assertNotNull(parkingBoys);
     }
