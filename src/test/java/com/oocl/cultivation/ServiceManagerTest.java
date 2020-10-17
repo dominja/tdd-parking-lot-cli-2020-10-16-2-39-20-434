@@ -11,7 +11,7 @@ class ServiceManagerTest {
     void should_return_list_of_parking_boys_to_management_list_manage_parking_boys() {
         //Given
         List<ParkingBoy> parkingBoys;
-        ServiceManager serviceManager = new ServiceManager();
+        ServiceManager serviceManager = new ServiceManager(new ParkingLot());
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
         List<ParkingBoy> listParkingBoy = Arrays.asList(parkingBoy, smartParkingBoy);
@@ -26,7 +26,7 @@ class ServiceManagerTest {
         //Given
         Car car = new Car();
         ParkingTicket ticket;
-        ServiceManager serviceManager = new ServiceManager();
+        ServiceManager serviceManager = new ServiceManager(new ParkingLot());
         ParkingBoy normalParkingBoy = new ParkingBoy(new ParkingLot());
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
         ParkingLot parkingLot1 = new ParkingLot(1);
