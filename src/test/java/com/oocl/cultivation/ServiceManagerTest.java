@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ServiceManagerTest {
     @Test
@@ -124,5 +123,16 @@ class ServiceManagerTest {
         ParkingTicket ticket = serviceManager.park(car);
         //then
         assertNull(parkingLot3.fetch(ticket));
+    }
+    @Test
+    void should_return_car_when_fetch_given_ticket_to_service_manager() {
+        //given
+        Car car = new Car();
+        ServiceManager serviceManager = new ServiceManager(new ParkingLot());
+        ParkingTicket ticket = serviceManager.park(car);
+        // when
+        Car returnedCar = serviceManager.fetch(ticket);
+        //then
+        assertSame(car,returnedCar);
     }
 }
