@@ -64,6 +64,7 @@ class ParkingBoyTest {
         });
         assertSame(car, returnCar);
     }
+
     @Test
     void should_return_UnrecognizedParkingTicket_error_message_when_fetched_given_reused_ticket_to_boy() {
         //given
@@ -114,7 +115,6 @@ class ParkingBoyTest {
     @Test
     void should_return_number_of_parked_cars_when_park_given_two_parking_lot_with_not_clever_boy() {
         //given
-        Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
 
         ParkingLot parkingLot1 = new ParkingLot(1, 0);
