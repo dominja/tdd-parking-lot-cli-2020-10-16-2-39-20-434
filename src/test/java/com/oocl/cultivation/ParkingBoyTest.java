@@ -55,11 +55,12 @@ class ParkingBoyTest {
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         ParkingTicket validTicket = parkingBoy.park(car);
+        ParkingTicket invalidTicket = new ParkingTicket();
         // when
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
         assertThrows(UnrecognizedParkingTicket.class, () -> {
-            parkingBoy.fetch(validTicket);
+            parkingBoy.fetch(invalidTicket);
         });
         assertSame(car, returnCar);
     }

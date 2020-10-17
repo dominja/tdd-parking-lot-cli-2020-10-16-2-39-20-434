@@ -17,7 +17,8 @@ class ServiceManagerTest {
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
         List<ParkingBoy> listParkingBoy = Arrays.asList(parkingBoy, smartParkingBoy);
         //When
-        parkingBoys = serviceManager.getParkingBoyList(listParkingBoy);
+        serviceManager.setParkingBoyList(listParkingBoy);
+        parkingBoys = serviceManager.getParkingBoys();
         // Then
         assertNotNull(parkingBoys);
     }
@@ -37,7 +38,7 @@ class ServiceManagerTest {
         normalParkingBoy.setListParkingLots(parkingLots);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy, smartParkingBoy);
-        serviceManager.getParkingBoyList(listParkingBoy);
+        serviceManager.setParkingBoyList(listParkingBoy);
         //When
         ticket = serviceManager.orderParkingBoyToPark(car, normalParkingBoy);
         // Then
@@ -60,7 +61,7 @@ class ServiceManagerTest {
         normalParkingBoy1.setListParkingLots(parkingLots);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy1, normalParkingBoy2);
-        serviceManager.getParkingBoyList(listParkingBoy);
+        serviceManager.setParkingBoyList(listParkingBoy);
         //When
         ticket = serviceManager.orderParkingBoyToPark(car, smartParkingBoy);
         // Then
@@ -89,7 +90,7 @@ class ServiceManagerTest {
         normalParkingBoy2.setListParkingLots(parkingLotsForNormalBoy2);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy1, normalParkingBoy2);
-        serviceManager.getParkingBoyList(listParkingBoy);
+        serviceManager.setParkingBoyList(listParkingBoy);
 
         //When
         ParkingTicket ticket = serviceManager.orderParkingBoyToPark(car, normalParkingBoy1);
@@ -134,5 +135,28 @@ class ServiceManagerTest {
         Car returnedCar = serviceManager.fetch(ticket);
         //then
         assertSame(car,returnedCar);
+    }
+    @Test
+    void should_return_UnrecognizedParkingTicket_message_when_manager_asked_to_fetch_given_invalid_ticket_to_boy() {
+        //Given
+        Car car = new Car();
+        ServiceManager serviceManager = new ServiceManager(new ParkingLot());
+        ParkingBoy normalParkingBoy = new ParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(3);
+
+        List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
+        normalParkingBoy.setListParkingLots(parkingLots);
+
+        List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy, smartParkingBoy);
+        serviceManager.setParkingBoyList(listParkingBoy);
+        //When
+        ParkingTicket invalidTicket = new ParkingTicket();
+        // when
+        //then
+        assertThrows(UnrecognizedParkingTicket.class, () -> {
+            serviceManager.orderParkingBoyToFetch(invalidTicket, normalParkingBoy);
+        });
     }
 }
