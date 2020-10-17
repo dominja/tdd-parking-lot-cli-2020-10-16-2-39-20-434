@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class ParkingLot {
     private int slot = 10;
+
     private Map<ParkingTicket, Car> parkingLotSpace = new HashMap<>();
 
     public ParkingLot(int slot) {
@@ -26,15 +27,20 @@ public class ParkingLot {
         return parkedCar;
     }
 
-    int getAvailableSlot() {
-        return slot - parkingLotSpace.size();
-    }
-
     boolean isFull() {
         return parkingLotSpace.size() >= slot;
     }
 
+    int getAvailableSlot() {
+        return slot - parkingLotSpace.size();
+    }
+
+
     Map<ParkingTicket, Car> getParkedCars() {
         return parkingLotSpace;
+    }
+
+    double getAverageAvailableSlot() {
+        return (double) getAvailableSlot() / slot * 100;
     }
 }
