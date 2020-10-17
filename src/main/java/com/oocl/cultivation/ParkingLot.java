@@ -1,28 +1,39 @@
 package com.oocl.cultivation;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ParkingLot {
-    private HashMap<ParkingTicket, Car> parkingLotSpace = new HashMap<>(10);
+    private int slot = 10;
+    private int carsParked;
+    private Map<ParkingTicket, Car> parkingLotSpace = new HashMap<>();
+
+    public ParkingLot(int slot, int carsParked) {
+        this.slot = slot;
+        this.carsParked = carsParked;
+    }
+
+    public ParkingLot() {
+    }
 
     ParkingTicket park(Car car) {
         ParkingTicket parkingTicket = new ParkingTicket();
-        if(parkingLotSpace.size()!=10) {
-            parkingLotSpace.put(parkingTicket, car);
-        }else {
-            throw new NoAvailableSpacesException("Not Enough Position");
-        }
+        parkingLotSpace.put(parkingTicket, car);
         return parkingTicket;
     }
 
-    Car fetch(ParkingTicket parkingTicket){
-        Car ticket = parkingLotSpace.get(parkingTicket);
-        if(ticket!=null) {
-            return ticket;
-        }else if(parkingTicket==null){
-            throw new NoTicketException("Please Provide Your Parking Ticket");
-        }else{
-            throw new UnrecognizedParkingTicket("Unrecognized Parking Ticket");
-        }
+    Car fetch(ParkingTicket parkingTicket) {
+        return parkingLotSpace.get(parkingTicket);
+    }
+
+    public int getAvailableSlot() {
+        return slot - carsParked;
+    }
+
+    boolean isFull() {
+        return parkingLotSpace.size() >= slot;
+    }
+    Map<ParkingTicket, Car> getParkedCars() {
+        return parkingLotSpace;
     }
 }
