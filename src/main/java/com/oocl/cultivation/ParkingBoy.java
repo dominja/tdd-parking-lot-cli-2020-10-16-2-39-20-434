@@ -23,7 +23,7 @@ public class ParkingBoy {
 
     public Car fetch(ParkingTicket parkingTicket) {
         Car carFetched = new Car();
-        if (checkTicket(parkingTicket)) {
+         if (checkTicket(parkingTicket)) {
             for (ParkingLot parkingLot : listParkingLots) {
                 carFetched = parkingLot.fetch(parkingTicket);
             }
