@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class ServiceManagerTest {
     @Test
     void should_return_list_of_parking_boys_to_management_list_manage_parking_boys() {
@@ -18,7 +20,7 @@ class ServiceManagerTest {
         //When
         parkingBoys = serviceManager.getParkingBoyList(listParkingBoy);
         // Then
-        Assertions.assertNotNull(parkingBoys);
+        assertNotNull(parkingBoys);
     }
 
     @Test
@@ -40,6 +42,28 @@ class ServiceManagerTest {
         //When
         ticket = serviceManager.orderParkingBoyToPark(car, normalParkingBoy);
         // Then
-        Assertions.assertNotNull(ticket);
+        assertNotNull(ticket);
+    }
+    @Test
+    void should_return_null_when_park_given_car_to_boy_which_is_not_on_list_and_parking_lot_is_managed() {
+        //Given
+        Car car = new Car();
+        ParkingTicket ticket;
+        ServiceManager serviceManager = new ServiceManager(new ParkingLot());
+        ParkingBoy normalParkingBoy1 = new ParkingBoy(new ParkingLot());
+        ParkingBoy normalParkingBoy2 = new ParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(3);
+
+        List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
+        normalParkingBoy1.setListParkingLots(parkingLots);
+
+        List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy1, normalParkingBoy2);
+        serviceManager.getParkingBoyList(listParkingBoy);
+        //When
+        ticket = serviceManager.orderParkingBoyToPark(car, smartParkingBoy);
+        // Then
+        assertNull(ticket);
     }
 }
