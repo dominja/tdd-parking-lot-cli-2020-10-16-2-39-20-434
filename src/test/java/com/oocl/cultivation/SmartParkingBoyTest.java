@@ -8,14 +8,14 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SmartParkingBoyTest {
+class SmartParkingBoyTest {
      @Test
          void should_return_number_of_parked_cars_when_parked_give_two_parking_lot_to_smart_boy()  {
          //given
          SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
 
-         ParkingLot parkingLot1 = new ParkingLot(10, 6);
-         ParkingLot parkingLot2 = new ParkingLot(15, 0);
+         ParkingLot parkingLot1 = new ParkingLot(10);
+         ParkingLot parkingLot2 = new ParkingLot(15);
          List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
          smartParkingBoy.setListParkingLots(parkingLots);
          // when

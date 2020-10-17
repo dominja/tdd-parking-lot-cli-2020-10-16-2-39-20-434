@@ -55,7 +55,6 @@ class ParkingBoyTest {
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         ParkingTicket validTicket = parkingBoy.park(car);
-        ParkingTicket invalidTicket = new ParkingTicket();
         // when
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
@@ -117,8 +116,8 @@ class ParkingBoyTest {
         //given
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
 
-        ParkingLot parkingLot1 = new ParkingLot(1, 0);
-        ParkingLot parkingLot2 = new ParkingLot(5, 0);
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(5);
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
         parkingBoy.setListParkingLots(parkingLots);
         // when
