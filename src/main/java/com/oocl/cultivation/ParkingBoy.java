@@ -41,7 +41,7 @@ public class ParkingBoy {
                 parkingLots.getParkedCars().containsKey(parkingTicket));
     }
 
-    private ParkingLot pickParkingLot() {
+    public ParkingLot pickParkingLot() {
         for (ParkingLot parkingLotSlot : listParkingLots) {
             if (!parkingLotSlot.isFull()) {
                 return parkingLotSlot;
