@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingBoy {
-    private List<ParkingLot> listParkingLots;
-
+    private static final String NOT_ENOUGH_POSITION = "Not Enough Position";
+    private static final String PLEASE_PROVIDE_YOUR_PARKING_TICKET = "Please Provide Your Parking Ticket";
+    private List<ParkingLot> parkingLots;
 
     public ParkingBoy(ParkingLot parkingLot) {
-        this.listParkingLots = new ArrayList<>();
-        this.listParkingLots.add(parkingLot);
+        this.parkingLots = new ArrayList<>();
+        this.parkingLots.add(parkingLot);
     }
 
-    public void setListParkingLots(List<ParkingLot> listParkingLots) {
-        this.listParkingLots = listParkingLots;
+    public void setParkingLots(List<ParkingLot> parkingLots) {
+        this.parkingLots = parkingLots;
     }
 
     public ParkingTicket park(Car car) {
@@ -21,10 +22,11 @@ public class ParkingBoy {
         return chosenParkingLot.park(car);
     }
 
+    //todo: convert to optional
     public Car fetch(ParkingTicket parkingTicket) {
         Car carFetched = new Car();
-         if (checkTicket(parkingTicket)) {
-            for (ParkingLot parkingLot : listParkingLots) {
+        if (checkTicket(parkingTicket)) {
+            for (ParkingLot parkingLot : parkingLots) {
                 carFetched = parkingLot.fetch(parkingTicket);
             }
             return carFetched;
@@ -35,18 +37,14 @@ public class ParkingBoy {
 
     private boolean checkTicket(ParkingTicket parkingTicket) {
         if (parkingTicket == null) {
-            throw new NoTicketException("Please Provide Your Parking Ticket");
+            throw new NoTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
         }
-        return listParkingLots.stream().anyMatch(parkingLots ->
-                parkingLots.getParkedCars().containsKey(parkingTicket));
+        return parkingLots.stream().anyMatch(lot ->
+                lot.getParkedCars().containsKey(parkingTicket));
     }
 
     public ParkingLot pickParkingLot() {
-        for (ParkingLot parkingLotSlot : listParkingLots) {
-            if (!parkingLotSlot.isFull()) {
-                return parkingLotSlot;
-            }
-        }
-        throw new NoAvailableSpacesException("Not Enough Position");
+        return parkingLots.stream().filter(lot -> !lot.isFull()).findFirst()
+                .orElseThrow(() -> new NoAvailableSpacesException(NOT_ENOUGH_POSITION));
     }
 }
