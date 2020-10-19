@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServiceManagerTest {
     @Test
-    void should_return_list_of_parking_boys_to_management_list_manage_parking_boys() {
+    void should_return_list_of_parking_boys_when_set_parking_boy_list_given_parking_boys() {
         //Given
         List<ParkingBoy> parkingBoys;
         ServiceManager serviceManager = new ServiceManager(new ParkingLot());
