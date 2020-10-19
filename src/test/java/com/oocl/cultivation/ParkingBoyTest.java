@@ -59,9 +59,10 @@ class ParkingBoyTest {
         // when
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
-        assertThrows(UnrecognizedParkingTicket.class, () -> {
+        UnrecognizedParkingTicket unrecognizedParkingTicket = assertThrows(UnrecognizedParkingTicket.class, () -> {
             parkingBoy.fetch(invalidTicket);
         });
+        assertEquals("Unrecognized Parking Ticket", unrecognizedParkingTicket.getMessage());
         assertSame(car, returnCar);
     }
 
@@ -74,9 +75,10 @@ class ParkingBoyTest {
         // when
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
-        assertThrows(UnrecognizedParkingTicket.class, () -> {
+        UnrecognizedParkingTicket unrecognizedParkingTicket = assertThrows(UnrecognizedParkingTicket.class, () -> {
             parkingBoy.fetch(validTicket);
         });
+        assertEquals("Unrecognized Parking Ticket", unrecognizedParkingTicket.getMessage());
         assertSame(car, returnCar);
     }
 
@@ -89,9 +91,10 @@ class ParkingBoyTest {
         // when
         Car returnCar = parkingBoy.fetch(validTicket);
         //then
-        assertThrows(NoTicketException.class, () -> {
+        NoTicketException noTicketException =  assertThrows(NoTicketException.class, () -> {
             parkingBoy.fetch(null);
         });
+        assertEquals("Please Provide Your Parking Ticket", noTicketException.getMessage());
         assertSame(car, returnCar);
     }
 
@@ -107,9 +110,10 @@ class ParkingBoyTest {
         // when
         parkingBoy.park(car);
         //then
-        assertThrows(NoAvailableSpacesException.class, () -> {
+        NoAvailableSpacesException noAvailableSpacesException = assertThrows(NoAvailableSpacesException.class, () -> {
             parkingBoy.park(car);
         });
+        assertEquals("Not Enough Position", noAvailableSpacesException.getMessage());
     }
 
     @Test
@@ -122,10 +126,8 @@ class ParkingBoyTest {
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
         parkingBoy.setListParkingLots(parkingLots);
         // when
-        IntStream.range(0, 3).forEach(cars -> {
-            Car carsNew = new Car();
-            parkingBoy.park(carsNew);
-        });
+        IntStream.range(0, 3).forEach(cars -> parkingBoy.park(new Car()));
+
         int actual1 = parkingLot1.getParkedCars().size();
         int actual2 = parkingLot2.getParkedCars().size();
         //then
