@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ParkingLotTest {
@@ -25,9 +26,10 @@ class ParkingLotTest {
             parkingBoy.park(carsNew);
         });
         //then
-        assertThrows(NoAvailableSpacesException.class, () -> {
+        NoAvailableSpacesException noAvailableSpacesException = assertThrows(NoAvailableSpacesException.class, () -> {
             parkingBoy.park(car);
         });
+        assertEquals("Not Enough Position", noAvailableSpacesException.getMessage());
     }
 
 }
