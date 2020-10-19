@@ -36,7 +36,7 @@ class ServiceManagerTest {
         ParkingLot parkingLot2 = new ParkingLot(3);
 
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        normalParkingBoy.setListParkingLots(parkingLots);
+        normalParkingBoy.setParkingLots(parkingLots);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy, smartParkingBoy);
         serviceManager.setParkingBoyList(listParkingBoy);
@@ -59,7 +59,7 @@ class ServiceManagerTest {
         ParkingLot parkingLot2 = new ParkingLot(3);
 
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        normalParkingBoy1.setListParkingLots(parkingLots);
+        normalParkingBoy1.setParkingLots(parkingLots);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy1, normalParkingBoy2);
         serviceManager.setParkingBoyList(listParkingBoy);
@@ -87,8 +87,8 @@ class ServiceManagerTest {
         List<ParkingLot> parkingLotsForNormalBoy1 = Arrays.asList(parkingLot1, parkingLot2);
         List<ParkingLot> parkingLotsForNormalBoy2 = Arrays.asList(parkingLot3, parkingLot4);
 
-        normalParkingBoy1.setListParkingLots(parkingLotsForNormalBoy1);
-        normalParkingBoy2.setListParkingLots(parkingLotsForNormalBoy2);
+        normalParkingBoy1.setParkingLots(parkingLotsForNormalBoy1);
+        normalParkingBoy2.setParkingLots(parkingLotsForNormalBoy2);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy1, normalParkingBoy2);
         serviceManager.setParkingBoyList(listParkingBoy);
@@ -120,7 +120,7 @@ class ServiceManagerTest {
         ParkingLot parkingLot2 = new ParkingLot(3);
         ParkingLot parkingLot3 = new ParkingLot(3);
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        serviceManager.setListParkingLots(parkingLots);
+        serviceManager.setParkingLots(parkingLots);
         // when
         ParkingTicket ticket = serviceManager.park(car);
         //then
@@ -151,7 +151,7 @@ class ServiceManagerTest {
         ParkingLot parkingLot2 = new ParkingLot(3);
 
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        normalParkingBoy1.setListParkingLots(parkingLots);
+        normalParkingBoy1.setParkingLots(parkingLots);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy1, normalParkingBoy2);
         serviceManager.setParkingBoyList(listParkingBoy);
@@ -171,7 +171,7 @@ class ServiceManagerTest {
         ParkingLot parkingLot2 = new ParkingLot(3);
 
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        normalParkingBoy.setListParkingLots(parkingLots);
+        normalParkingBoy.setParkingLots(parkingLots);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy, smartParkingBoy);
         serviceManager.setParkingBoyList(listParkingBoy);
@@ -182,6 +182,7 @@ class ServiceManagerTest {
             serviceManager.orderParkingBoyToFetch(invalidTicket, normalParkingBoy);
         });
     }
+
     @Test
     void should_return_NoTicketException_message_when_manager_asked_to_fetch_given_no_ticket_to_boy() {
         //Given
@@ -192,7 +193,7 @@ class ServiceManagerTest {
         ParkingLot parkingLot2 = new ParkingLot(3);
 
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        normalParkingBoy.setListParkingLots(parkingLots);
+        normalParkingBoy.setParkingLots(parkingLots);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy, smartParkingBoy);
         serviceManager.setParkingBoyList(listParkingBoy);
@@ -202,6 +203,7 @@ class ServiceManagerTest {
             serviceManager.orderParkingBoyToFetch(null, normalParkingBoy);
         });
     }
+
     @Test
     void should_return_NoAvailableSpacesException_message_when_manager_asked_to_fetch_given_no_ticket_to_boy() {
         //Given
@@ -213,7 +215,7 @@ class ServiceManagerTest {
         ParkingLot parkingLot2 = new ParkingLot(3);
 
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        normalParkingBoy.setListParkingLots(parkingLots);
+        normalParkingBoy.setParkingLots(parkingLots);
 
         List<ParkingBoy> listParkingBoy = Arrays.asList(normalParkingBoy, smartParkingBoy);
         serviceManager.setParkingBoyList(listParkingBoy);

@@ -17,7 +17,7 @@ class SuperSmartParkingBoyTest {
         ParkingLot parkingLot1 = new ParkingLot(2);
         ParkingLot parkingLot2 = new ParkingLot(15);
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        superSmartParkingBoy.setListParkingLots(parkingLots);
+        superSmartParkingBoy.setParkingLots(parkingLots);
         // when
         IntStream.range(0, 7).forEach(cars -> {
             Car carsNew = new Car();

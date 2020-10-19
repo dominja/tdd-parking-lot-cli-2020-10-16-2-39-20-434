@@ -18,7 +18,7 @@ class ParkingLotTest {
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(6);
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        parkingBoy.setListParkingLots(parkingLots);
+        parkingBoy.setParkingLots(parkingLots);
         // when
         IntStream.range(0, 7).forEach(cars -> {
             Car carsNew = new Car();

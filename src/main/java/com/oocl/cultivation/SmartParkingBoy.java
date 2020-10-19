@@ -17,8 +17,9 @@ public class SmartParkingBoy extends ParkingBoy {
                 .orElseThrow(() -> new NoAvailableSpacesException("Not Enough Position"));
     }
 
+    //tod:remove this method
     @Override
-    public void setListParkingLots(List<ParkingLot> parkingLots) {
+    public void setParkingLots(List<ParkingLot> parkingLots) {
         this.listParkingLots = parkingLots;
     }
 

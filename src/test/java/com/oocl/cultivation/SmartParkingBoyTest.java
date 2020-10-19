@@ -17,7 +17,7 @@ class SmartParkingBoyTest {
         ParkingLot parkingLot1 = new ParkingLot(10);
         ParkingLot parkingLot2 = new ParkingLot(15);
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        smartParkingBoy.setListParkingLots(parkingLots);
+        smartParkingBoy.setParkingLots(parkingLots);
         // when
         IntStream.range(0, 3).forEach(cars -> {
             Car carsNew = new Car();
@@ -29,4 +29,6 @@ class SmartParkingBoyTest {
         assertEquals(0, actual1);
         assertEquals(3, actual2);
     }
+
+    //todo:add another test case for exception
 }
