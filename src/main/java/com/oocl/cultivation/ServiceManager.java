@@ -4,11 +4,11 @@ import java.util.List;
 
 public class ServiceManager extends ParkingBoy {
 
+    private List<ParkingBoy> parkingBoys;
+
     public List<ParkingBoy> getParkingBoys() {
         return parkingBoys;
     }
-
-    private List<ParkingBoy> parkingBoys;
 
     public ServiceManager(ParkingLot parkingLot) {
         super(parkingLot);
