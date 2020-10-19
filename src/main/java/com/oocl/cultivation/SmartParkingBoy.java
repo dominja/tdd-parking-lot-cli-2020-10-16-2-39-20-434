@@ -12,6 +12,7 @@ public class SmartParkingBoy extends ParkingBoy {
     public ParkingLot pickParkingLot() {
         return getParkingLots().stream()
                 .max(Comparator.comparing(ParkingLot::getAvailableSlot))
+                .filter(lot ->!lot.isFull())
                 .orElseThrow(() -> new NoAvailableSpacesException(NOT_ENOUGH_POSITION));
     }
 }
