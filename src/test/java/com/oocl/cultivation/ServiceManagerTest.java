@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,9 +15,9 @@ class ServiceManagerTest {
     private SmartParkingBoy smartParkingBoy;
     private SuperSmartParkingBoy superSmartParkingBoy;
     private ParkingTicket ticket;
-    private ParkingLot parkingLot1 = new ParkingLot(1);
-    private ParkingLot parkingLot2 = new ParkingLot(3);
-    private ParkingLot parkingLot3 = new ParkingLot(3);
+    private ParkingLot parkingLot1;
+    private ParkingLot parkingLot2;
+    private ParkingLot parkingLot3;
 
 
     @BeforeEach
@@ -29,22 +28,32 @@ class ServiceManagerTest {
         normalParkingBoy = new ParkingBoy(new ParkingLot());
         smartParkingBoy = new SmartParkingBoy(new ParkingLot());
         superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        parkingLot1 = new ParkingLot(1);
+        parkingLot2 = new ParkingLot(3);
+        parkingLot3 = new ParkingLot(4);
+    }
+
+    private void addParkingBoyToList() {
+        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, smartParkingBoy));
+    }
+
+    void setParkingLotToParkingBoy() {
+        normalParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
     }
 
     @Test
     void should_return_list_of_parking_boys_when_set_parking_boy_list_given_parking_boys() {
         //When
-        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, smartParkingBoy));
-        List<ParkingBoy> parkingBoys = serviceManager.getParkingBoys();
+        addParkingBoyToList();
         // Then
-        assertNotNull(parkingBoys);
+        assertNotNull(serviceManager.getParkingBoys());
     }
 
     @Test
     void should_return_parking_ticket_when_park_given_car_to_boy_which_is_on_list_and_parking_lot_is_managed() {
         //Given
-        normalParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
-        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, smartParkingBoy));
+        setParkingLotToParkingBoy();
+        addParkingBoyToList();
         //When
         ticket = serviceManager.orderParkingBoyToPark(car, normalParkingBoy);
         // Then
@@ -54,10 +63,10 @@ class ServiceManagerTest {
     @Test
     void should_return_null_when_park_given_car_to_boy_which_is_not_on_list_and_parking_lot_is_managed() {
         //Given
-        normalParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
-        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, superSmartParkingBoy));
+        setParkingLotToParkingBoy();
+        addParkingBoyToList();
         //When
-        ticket = serviceManager.orderParkingBoyToPark(car, smartParkingBoy);
+        ticket = serviceManager.orderParkingBoyToPark(car, superSmartParkingBoy);
         // Then
         assertNull(ticket);
     }
@@ -66,10 +75,9 @@ class ServiceManagerTest {
     void should_return_null_when_park_given_to_boy_and_can_only_access_his_own_parkinglot() {
         //Given
         ParkingLot parkingLot4 = new ParkingLot(4);
-
-        normalParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
+        setParkingLotToParkingBoy();
         smartParkingBoy.setParkingLots(Arrays.asList(parkingLot3, parkingLot4));
-        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, smartParkingBoy));
+        addParkingBoyToList();
 
         //When
         ParkingTicket ticket = serviceManager.orderParkingBoyToPark(car, normalParkingBoy);
@@ -105,10 +113,10 @@ class ServiceManagerTest {
     @Test
     void should_return_null_when_fetch_given_no_ticket_to_boy_which_is_not_on_list_and_parking_lot_is_managed() {
         //Given
-        normalParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
-        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, superSmartParkingBoy));
+        setParkingLotToParkingBoy();
+        addParkingBoyToList();
         //When
-        car = serviceManager.orderParkingBoyToFetch(null, smartParkingBoy);
+        car = serviceManager.orderParkingBoyToFetch(null, superSmartParkingBoy);
         // Then
         assertNull(car);
     }
@@ -116,8 +124,8 @@ class ServiceManagerTest {
     @Test
     void should_return_UnrecognizedParkingTicket_message_when_manager_asked_to_fetch_given_invalid_ticket_to_boy() {
         //Given
-        normalParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
-        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, smartParkingBoy));
+        setParkingLotToParkingBoy();
+        addParkingBoyToList();
         ticket = new ParkingTicket();
         //then
         UnrecognizedParkingTicket unrecognizedParkingTicket = assertThrows(UnrecognizedParkingTicket.class, () -> {
@@ -130,10 +138,10 @@ class ServiceManagerTest {
     @Test
     void should_return_NoTicketException_message_when_manager_asked_to_fetch_given_no_ticket_to_boy() {
         //Given
-        normalParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
-        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, smartParkingBoy));
+        setParkingLotToParkingBoy();
+        addParkingBoyToList();
         //then
-        NoTicketException noTicketException=assertThrows(NoTicketException.class, () -> {
+        NoTicketException noTicketException = assertThrows(NoTicketException.class, () -> {
             //when
             serviceManager.orderParkingBoyToFetch(null, normalParkingBoy);
         });
@@ -143,8 +151,8 @@ class ServiceManagerTest {
     @Test
     void should_return_NoAvailableSpacesException_message_when_manager_asked_to_fetch_given_no_ticket_to_boy() {
         //Given
-        normalParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
-        serviceManager.setParkingBoyList(Arrays.asList(normalParkingBoy, smartParkingBoy));
+        setParkingLotToParkingBoy();
+        addParkingBoyToList();
         IntStream.range(0, 4).forEach(cars -> {
             serviceManager.orderParkingBoyToPark(car, normalParkingBoy);
         });
@@ -154,5 +162,6 @@ class ServiceManagerTest {
             serviceManager.orderParkingBoyToPark(car, normalParkingBoy);
         });
     }
+
 
 }
