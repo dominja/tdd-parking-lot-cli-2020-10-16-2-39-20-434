@@ -2,10 +2,12 @@ package com.oocl.cultivation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ParkingBoy {
     private static final String NOT_ENOUGH_POSITION = "Not Enough Position";
     private static final String PLEASE_PROVIDE_YOUR_PARKING_TICKET = "Please Provide Your Parking Ticket";
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized Parking Ticket";
     private List<ParkingLot> parkingLots;
 
     public ParkingBoy(ParkingLot parkingLot) {
@@ -22,25 +24,15 @@ public class ParkingBoy {
         return chosenParkingLot.park(car);
     }
 
-    //todo: convert to optional
     public Car fetch(ParkingTicket parkingTicket) {
-        Car carFetched = new Car();
-        if (checkTicket(parkingTicket)) {
-            for (ParkingLot parkingLot : parkingLots) {
-                carFetched = parkingLot.fetch(parkingTicket);
-            }
-            return carFetched;
-        } else {
-            throw new UnrecognizedParkingTicket("Unrecognized Parking Ticket");
-        }
+        return parkingLots.stream().filter(lot -> lot.getParkedCars().containsKey(validateTicket(parkingTicket)))
+                .map(lot -> lot.fetch(parkingTicket)).findFirst()
+                .orElseThrow(() -> new UnrecognizedParkingTicket(UNRECOGNIZED_PARKING_TICKET));
     }
 
-    private boolean checkTicket(ParkingTicket parkingTicket) {
-        if (parkingTicket == null) {
-            throw new NoTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
-        }
-        return parkingLots.stream().anyMatch(lot ->
-                lot.getParkedCars().containsKey(parkingTicket));
+    private ParkingTicket validateTicket(ParkingTicket parkingTicket) {
+        return Optional.ofNullable(parkingTicket).orElseThrow(() ->
+                new NoTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET));
     }
 
     public ParkingLot pickParkingLot() {
