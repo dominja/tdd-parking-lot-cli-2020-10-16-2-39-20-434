@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SmartParkingBoyTest {
     @Test
@@ -31,4 +32,26 @@ class SmartParkingBoyTest {
     }
 
     //todo:add another test case for exception
+    @Test
+    void should_return_NoAvailableSpacesException_error_message_when_park_given_car_to_boy_and_full() {
+        //given
+        Car car = new Car();
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
+
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
+        smartParkingBoy.setParkingLots(parkingLots);
+        // when
+        IntStream.range(0, 2).forEach(cars -> {
+            Car carsNew = new Car();
+            smartParkingBoy.park(carsNew);
+        });
+        //then
+        NoAvailableSpacesException noAvailableSpacesException = assertThrows(NoAvailableSpacesException.class, () -> {
+            smartParkingBoy.park(car);
+        });
+        assertEquals("Not Enough Position", noAvailableSpacesException.getMessage());
+    }
+
 }
