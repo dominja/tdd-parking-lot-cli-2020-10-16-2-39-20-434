@@ -1,10 +1,8 @@
 package com.oocl.cultivation;
 
 import java.util.Comparator;
-import java.util.List;
 
 public class SmartParkingBoy extends ParkingBoy {
-    private List<ParkingLot> listParkingLots;
 
     public SmartParkingBoy(ParkingLot parkingLot) {
         super(parkingLot);
@@ -12,15 +10,8 @@ public class SmartParkingBoy extends ParkingBoy {
 
     @Override
     public ParkingLot pickParkingLot() {
-        return listParkingLots.stream()
+        return getParkingLots().stream()
                 .max(Comparator.comparing(ParkingLot::getAvailableSlot))
-                .orElseThrow(() -> new NoAvailableSpacesException("Not Enough Position"));
+                .orElseThrow(() -> new NoAvailableSpacesException(NOT_ENOUGH_POSITION));
     }
-
-    //tod:remove this method
-    @Override
-    public void setParkingLots(List<ParkingLot> parkingLots) {
-        this.listParkingLots = parkingLots;
-    }
-
 }

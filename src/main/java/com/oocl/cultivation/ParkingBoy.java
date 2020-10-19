@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ParkingBoy {
-    private static final String NOT_ENOUGH_POSITION = "Not Enough Position";
+    static final String NOT_ENOUGH_POSITION = "Not Enough Position";
     private static final String PLEASE_PROVIDE_YOUR_PARKING_TICKET = "Please Provide Your Parking Ticket";
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized Parking Ticket";
     private List<ParkingLot> parkingLots;
@@ -15,7 +15,7 @@ public class ParkingBoy {
         this.parkingLots.add(parkingLot);
     }
 
-    public List<ParkingLot> getParkingLots() {
+    List<ParkingLot> getParkingLots() {
         return parkingLots;
     }
 
