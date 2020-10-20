@@ -2,6 +2,9 @@ package com.oocl.cultivation;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
+import static com.oocl.cultivation.ParkingBoy.UNRECOGNIZED_PARKING_TICKET;
 
 public class ServiceManager extends Employee {
 
@@ -31,17 +34,21 @@ public class ServiceManager extends Employee {
         this.parkingBoys = parkingBoyList;
     }
 
-    public ParkingTicket orderParkingBoyToPark(Car car, ParkingBoy parkingBoy) {
-        if (parkingBoys.contains(parkingBoy)) {
-            return parkingBoy.park(car);
-        }
-        return null;
+    public ParkingTicket orderParkingBoyToPark(Car car) {
+        return parkingBoys.get(0).park(car);
     }
 
-    public Car orderParkingBoyToFetch(ParkingTicket parkingTicket, ParkingBoy parkingBoy) {
-        if (parkingBoys.contains(parkingBoy)) {
-            return parkingBoy.fetch(parkingTicket);
-        }
-        return null;
+    public Car orderParkingBoyToFetch(ParkingTicket parkingTicket) {
+        Optional<ParkingBoy> managedParkingBoy = getParkingBoyToCommand(parkingTicket);
+
+        return managedParkingBoy.map(parkingBoy -> parkingBoy.fetch(parkingTicket))
+                .orElseThrow(() -> new UnrecognizedParkingTicket(UNRECOGNIZED_PARKING_TICKET));
+    }
+
+    private Optional<ParkingBoy> getParkingBoyToCommand(ParkingTicket parkingTicket) {
+        return parkingBoys.stream().filter(parkingBoy ->
+                parkingBoy.getParkingLotList().stream()
+                        .anyMatch(parkingLot -> parkingLot.getParkedCars().containsKey(parkingTicket)))
+                .findFirst();
     }
 }
