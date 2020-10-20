@@ -5,7 +5,7 @@ import java.util.List;
 import static java.util.Collections.singletonList;
 
 abstract class Employee {
-    private List<ParkingLot> parkingLots;
+    List<ParkingLot> parkingLots;
 
     Employee(List<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
@@ -15,7 +15,7 @@ abstract class Employee {
         this.parkingLots = singletonList(parkingLot);
     }
 
-    List<ParkingLot> getParkingLots() {
+    List<ParkingLot> getParkingLotList() {
         return parkingLots;
     }
 
