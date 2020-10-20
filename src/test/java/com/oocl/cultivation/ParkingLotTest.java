@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ParkingLotTest {
     @Test
-    void should_return_NoAvailableSpacesException_error_msg_when_parking_lot_is_full() {
+    void should_return_NoAvailableSpacesException_error_msg_when_parking_lot_is_full_given_car() {
         //given
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
