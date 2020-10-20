@@ -3,8 +3,6 @@ package com.oocl.cultivation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,12 +16,6 @@ class ParkingBoyTest {
         //given
         car = new Car();
         parkingBoy = new ParkingBoy(new ParkingLot());
-    }
-
-    private void parkCars(int numberOfCars) {
-        IntStream.range(0, numberOfCars).forEach(cars -> {
-            parkACar();
-        });
     }
 
     private ParkingTicket parkACar() {
@@ -102,7 +94,9 @@ class ParkingBoyTest {
     @Test
     void should_return_NoAvailableSpacesException_error_message_when_fetched_given_car_to_boy_and_full() {
         //given
-        parkCars(9);
+        IntStream.range(0, 9).forEach(cars -> {
+            parkingBoy.park(car);
+        });
         // when
         parkACar();
         //then
@@ -117,10 +111,11 @@ class ParkingBoyTest {
         //given
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(5);
-        List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
-        parkingBoy.setParkingLots(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot1, parkingLot2);
         // when
-        parkCars(3);
+        IntStream.range(0, 3).forEach(cars -> {
+            parkingBoy.park(car);
+        });
         int actual1 = parkingLot1.getParkedCars().size();
         int actual2 = parkingLot2.getParkedCars().size();
         //then
