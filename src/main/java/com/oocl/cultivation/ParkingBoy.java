@@ -40,7 +40,7 @@ public class ParkingBoy {
     }
 
     public ParkingLot pickParkingLot() {
-        return parkingLots.stream().filter(lot -> !lot.isFull()).findFirst()
+        return parkingLots.stream().filter(ParkingLot::isNotFull).findFirst()
                 .orElseThrow(() -> new NoAvailableSpacesException(NOT_ENOUGH_POSITION));
     }
 }
