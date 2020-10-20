@@ -8,11 +8,10 @@ public class SmartParkingBoy extends ParkingBoy {
         super(parkingLot);
     }
 
-    @Override
     public ParkingLot pickParkingLot() {
         return getParkingLots().stream()
                 .max(Comparator.comparing(ParkingLot::getAvailableSlot))
-                .filter(lot ->!lot.isFull())
+                .filter(ParkingLot::isNotFull)
                 .orElseThrow(() -> new NoAvailableSpacesException(NOT_ENOUGH_POSITION));
     }
 }

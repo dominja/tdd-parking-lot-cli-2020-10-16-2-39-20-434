@@ -12,6 +12,7 @@ public class ServiceManager extends ParkingBoy {
 
     public ServiceManager(ParkingLot parkingLot) {
         super(parkingLot);
+
     }
 
     public void setParkingBoyList(List<ParkingBoy> parkingBoyList) {
@@ -24,7 +25,7 @@ public class ServiceManager extends ParkingBoy {
         }
         return null;
     }
-//todo: get the parking boy instead of passing
+
     public Car orderParkingBoyToFetch(ParkingTicket parkingTicket, ParkingBoy parkingBoy) {
         if (parkingBoys.contains(parkingBoy)) {
             return parkingBoy.fetch(parkingTicket);

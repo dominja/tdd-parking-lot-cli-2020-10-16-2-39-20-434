@@ -27,8 +27,8 @@ public class ParkingLot {
         return parkedCar;
     }
 
-    boolean isFull() {
-        return parkingLotSpace.size() >= slot;
+    boolean isNotFull() {
+        return parkingLotSpace.size() < slot;
     }
 
     int getAvailableSlot() {
