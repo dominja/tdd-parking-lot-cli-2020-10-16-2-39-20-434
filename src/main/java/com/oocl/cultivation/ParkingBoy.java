@@ -1,46 +1,24 @@
 package com.oocl.cultivation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.Arrays;
 
-public class ParkingBoy  {
+public class ParkingBoy extends Employee {
     static final String NOT_ENOUGH_POSITION = "Not Enough Position";
     static final String PLEASE_PROVIDE_YOUR_PARKING_TICKET = "Please Provide Your Parking Ticket";
     static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized Parking Ticket";
-    private List<ParkingLot> parkingLots;
+    private NormalParkingBoySkill normalParkingBoySkill;
 
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLots = new ArrayList<>();
-        this.parkingLots.add(parkingLot);
-    }
-
-    List<ParkingLot> getParkingLots() {
-        return parkingLots;
-    }
-
-    public void setParkingLots(List<ParkingLot> parkingLots) {
-        this.parkingLots = parkingLots;
+    public ParkingBoy(ParkingLot... parkingLot) {
+        super(Arrays.asList(parkingLot));
+        this.normalParkingBoySkill = new NormalParkingBoySkill(Arrays.asList(parkingLot));
     }
 
     public ParkingTicket park(Car car) {
-        ParkingLot chosenParkingLot = pickParkingLot();
-        return chosenParkingLot.park(car);
+        return normalParkingBoySkill.park(car);
     }
 
     public Car fetch(ParkingTicket parkingTicket) {
-        return parkingLots.stream().filter(lot -> lot.getParkedCars().containsKey(validateTicket(parkingTicket)))
-                .map(lot -> lot.fetch(parkingTicket)).findFirst()
-                .orElseThrow(() -> new UnrecognizedParkingTicket(UNRECOGNIZED_PARKING_TICKET));
+        return normalParkingBoySkill.fetch(parkingTicket);
     }
 
-    private ParkingTicket validateTicket(ParkingTicket parkingTicket) {
-        return Optional.ofNullable(parkingTicket).orElseThrow(() ->
-                new NoTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET));
-    }
-
-    public ParkingLot pickParkingLot() {
-        return parkingLots.stream().filter(ParkingLot::isNotFull).findFirst()
-                .orElseThrow(() -> new NoAvailableSpacesException(NOT_ENOUGH_POSITION));
-    }
 }
