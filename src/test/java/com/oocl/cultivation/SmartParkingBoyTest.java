@@ -3,7 +3,6 @@ package com.oocl.cultivation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,16 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class SmartParkingBoyTest {
 
     private Car car;
-    private SmartParkingBoy smartParkingBoy;
 
     @BeforeEach
     void setUp() {
         //given
         car = new Car();
-        smartParkingBoy = new SmartParkingBoy(new ParkingLot());
     }
 
-    private void parkCars() {
+    private void parkCars(SmartParkingBoy smartParkingBoy) {
         IntStream.range(0, 3).forEach(cars -> {
             smartParkingBoy.park(car);
         });
@@ -32,9 +29,9 @@ class SmartParkingBoyTest {
         //given
         ParkingLot parkingLot1 = new ParkingLot(10);
         ParkingLot parkingLot2 = new ParkingLot(15);
-        smartParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot1, parkingLot2);
         // when
-        parkCars();
+        parkCars(smartParkingBoy);
         int actual1 = parkingLot1.getParkedCars().size();
         int actual2 = parkingLot2.getParkedCars().size();
         //then
@@ -48,9 +45,9 @@ class SmartParkingBoyTest {
         //given
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(2);
-        smartParkingBoy.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot1, parkingLot2);
         // when
-        parkCars();
+        parkCars(smartParkingBoy);
         //then
         NoAvailableSpacesException noAvailableSpacesException = assertThrows(NoAvailableSpacesException.class, () -> {
             smartParkingBoy.park(car);
