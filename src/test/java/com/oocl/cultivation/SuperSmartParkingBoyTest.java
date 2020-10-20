@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SuperSmartParkingBoyTest {
     @Test
-    void should_return_number_of_parked_cars_when_parked_give_two_parking_lot_to_super_smart_boy() {
+    void should_return_number_of_parked_cars_when_parked_given_two_parking_lot_to_super_smart_boy() {
         //given
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
 

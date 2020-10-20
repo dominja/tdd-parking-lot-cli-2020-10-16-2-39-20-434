@@ -28,7 +28,7 @@ class SmartParkingBoyTest {
     }
 
     @Test
-    void should_return_number_of_parked_cars_when_parked_give_two_parking_lot_to_smart_boy() {
+    void should_return_number_of_parked_cars_when_parked_given_two_parking_lot_to_smart_boy() {
         //given
         ParkingLot parkingLot1 = new ParkingLot(10);
         ParkingLot parkingLot2 = new ParkingLot(15);
