@@ -95,7 +95,7 @@ class ServiceManagerTest {
     @Test
     void should_return_null_when_parked_to_wrong_parking_lot_given_car_to_service_manager_() {
         //given
-        serviceManager.setParkingLots(Arrays.asList(parkingLot1, parkingLot2));
+        serviceManager = new ServiceManager(parkingLot1,parkingLot2);
         // when
         ParkingTicket ticket = serviceManager.park(car);
         //then
