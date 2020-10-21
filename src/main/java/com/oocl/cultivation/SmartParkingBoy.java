@@ -8,6 +8,7 @@ public class SmartParkingBoy extends ParkingBoy {
         super(parkingLot);
     }
 
+    @Override
     public ParkingLot pickParkingLot() {
         return getParkingLotList().stream()
                 .max(Comparator.comparing(ParkingLot::getAvailableSlot))

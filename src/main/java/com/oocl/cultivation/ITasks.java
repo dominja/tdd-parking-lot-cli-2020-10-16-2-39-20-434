@@ -5,5 +5,6 @@ public interface ITasks {
 
     ParkingTicket park(Car car);
 
+     ParkingLot pickParkingLot();
 
 }
